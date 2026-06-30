@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aether Investigations</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: radial-gradient(circle at top, #1e293b, #0f172a);
+            color: white;
+        }
+
+        /* TOP GAME BAR */
+        .topbar {
+            background: #111827;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+        }
+
+        .title {
+            font-weight: bold;
+            color: #22c55e;
+        }
+
+        .container {
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        /* LEFT PANEL (CASE INFO) */
+        .case-panel {
+            width: 30%;
+            background: #1e293b;
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        /* RIGHT PANEL (SUSPECTS) */
+        .suspects-panel {
+            width: 70%;
+        }
+
+        .suspect-card {
+            background: #334155;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            transition: 0.3s;
+            border-left: 4px solid #22c55e;
+        }
+
+        .suspect-card:hover {
+            transform: scale(1.02);
+            background: #475569;
+        }
+
+        /* BUTTONS */
+        .btn {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: white;
+            font-size: 14px;
+        }
+
+        .accuse {
+            background: #ef4444;
+        }
+
+        .interrogate {
+            background: #3b82f6;
+        }
+
+        .accuse:hover {
+            background: #dc2626;
+        }
+
+        .interrogate:hover {
+            background: #2563eb;
+        }
+
+        /* RESULT BOX */
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            background: #0ea5e9;
+            border-radius: 10px;
+        }
+
+        .label {
+            color: #94a3b8;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+    <div class="title">🕵️ AETHER INVESTIGATIONS</div>
+    <div>MISSION: SOLVE THE CASE</div>
+</div>
+
+<div class="container">
+
+    <!-- CASE INFO -->
+    <div class="case-panel">
+        <h3>CASE FILE</h3>
+        <p><span class="label">Victim:</span> {{ case.victim }}</p>
+        <p><span class="label">Location:</span> {{ case.location }}</p>
+        <p><span class="label">Weapon:</span> {{ case.weapon }}</p>
+    </div>
+
+    <!-- SUSPECTS -->
+    <div class="suspects-panel">
+        <h2>Suspects</h2>
+
+        {% for s in case.suspects %}
+        <div class="suspect-card">
+            <b>{{ loop.index }}. {{ s.name }}</b><br>
+            <span class="label">Occupation:</span> {{ s.occupation }}<br>
+            <span class="label">Age:</span> {{ s.age }}<br>
+            <span class="label">Clue:</span> {{ s.clue }}<br>
+
+            <a class="btn interrogate" href="/interrogate/{{ loop.index0 }}">Interrogate</a>
+            <a class="btn accuse" href="/accuse/{{ loop.index0 }}">Accuse</a>
+        </div>
+        {% endfor %}
+
+        {% if result %}
+        <div class="result">
+            {{ result }}
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>
