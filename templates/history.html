@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Case History — Aether Investigations</title>
+    <style>
+        body { background: #0f172a; color: white; font-family: Arial; padding: 40px; }
+        .box { background: #1e293b; padding: 25px; border-radius: 10px; width: 60%; margin: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        td, th { padding: 8px; text-align: left; border-bottom: 1px solid #334155; }
+        .solved { color: #22c55e; }
+        .unsolved { color: #ef4444; }
+        .btn { display: inline-block; margin-top: 20px; padding: 10px 15px; background: #22c55e; color: white; text-decoration: none; border-radius: 6px; }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h1>📁 Case History</h1>
+    <p>Total Score: {{ score }}</p>
+
+    {% if history %}
+    <table>
+        <tr><th>#</th><th>Victim</th><th>Killer</th><th>Result</th></tr>
+        {% for h in history %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ h.victim }}</td>
+            <td>{{ h.killer }}</td>
+            <td class="{{ 'solved' if h.solved else 'unsolved' }}">
+                {{ '✅ Solved' if h.solved else '❌ Unsolved' }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p>No cases completed yet.</p>
+    {% endif %}
+
+    <a class="btn" href="/">⬅ Back to Case Board</a>
+</div>
+
+</body>
+</html>
