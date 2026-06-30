@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interrogation Room</title>
+
+    <style>
+        body {
+            background: #0f172a;
+            color: white;
+            font-family: Arial;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .box {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            width: 60%;
+            margin: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background: #22c55e;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .btn:hover {
+            background: #16a34a;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>🧠 Interrogation Room</h1>
+
+<div class="box">
+    <h2>{{ suspect.name }}</h2>
+    <p><b>Occupation:</b> {{ suspect.occupation }}</p>
+    <p><b>Age:</b> {{ suspect.age }}</p>
+    <p><b>Personality:</b> {{ suspect.personality }}</p>
+
+    <hr>
+
+    <p>{{ response }}</p>
+
+    <a class="btn" href="/">⬅ Back to Case</a>
+</div>
+
+</body>
+</html>
