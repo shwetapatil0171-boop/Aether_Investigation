@@ -3,7 +3,11 @@ victims = [
     "Arjun Malhotra", "Priya Nair", "Devansh Kapoor", "Meera Iyer",
     "Rohan Bhatt", "Kavya Reddy"
 ]
-
+locations = [
+    "Mumbai Apartment", "Pune Hostel", "Office Building", "Old Warehouse",
+    "Hill Station Resort", "Riverside Bungalow", "Art Gallery", "Train Compartment",
+    "Farmhouse", "Rooftop Restaurant"
+]
 location_images = {
     "Mumbai Apartment": "apartment.jpg",
     "Pune Hostel": "hostel.jpg",
