@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Crime Scene</title>
+
+<style>
+
+body{
+
+margin:0;
+
+background:#08131f;
+
+font-family:Arial;
+
+color:white;
+
+}
+
+.header{
+
+background:#111827;
+
+padding:20px;
+
+text-align:center;
+
+font-size:35px;
+
+color:#38bdf8;
+
+}
+
+.container{
+
+width:90%;
+
+margin:auto;
+
+padding:30px;
+
+}
+
+.scene{
+
+background:#1e293b;
+
+padding:25px;
+
+border-radius:15px;
+
+box-shadow:0px 0px 20px rgba(0,255,255,.15);
+
+}
+
+.scene img{
+
+width:100%;
+
+border-radius:15px;
+
+}
+
+.evidence{
+
+margin-top:30px;
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:20px;
+
+}
+
+.card{
+
+background:#334155;
+
+padding:20px;
+
+border-radius:10px;
+
+transition:.3s;
+
+cursor:pointer;
+
+text-align:center;
+
+}
+
+.card:hover{
+
+transform:scale(1.05);
+
+background:#475569;
+
+}
+
+.btn{
+
+display:inline-block;
+
+margin-top:35px;
+
+padding:15px 35px;
+
+background:#2563eb;
+
+color:white;
+
+text-decoration:none;
+
+border-radius:10px;
+
+font-size:18px;
+
+}
+
+.btn:hover{
+
+background:#1d4ed8;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+🕵 Crime Scene Investigation
+
+</div>
+
+<div class="container">
+
+<div class="scene">
+
+<h2>{{ case.location }}</h2>
+
+<p><b>Victim:</b> {{ case.victim }}</p>
+
+<p><b>Weapon:</b> {{ case.weapon }}</p>
+
+{% if case.scene_image %}
+<img src="{{ url_for('static', filename='images/crime_scenes/' + case.scene_image) }}"
+     alt="Crime Scene"
+     style="width:100%;
+            height:450px;
+            object-fit:cover;
+            border-radius:15px;
+            border:3px solid #38bdf8;
+            box-shadow:0 0 25px rgba(56,189,248,.35);">
+{% else %}
+<h2>🚧 Crime Scene Image Coming Soon</h2>
+{% endif %}
+
+</div>
+
+<h2 style="margin-top:35px;">Evidence Found</h2>
+
+<div class="evidence">
+
+<div class="card">🩸 Blood Sample</div>
+
+<div class="card">👣 Footprints</div>
+
+<div class="card">📱 Mobile Phone</div>
+
+<div class="card">🔪 Murder Weapon</div>
+
+</div>
+
+<a class="btn" href="/start">
+
+Continue Investigation →
+
+</a>
+
+</div>
+
+</body>
+
+</html>
