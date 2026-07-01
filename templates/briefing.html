@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Mission Briefing</title>
+
+<style>
+
+body{
+background:#07111f;
+font-family:Arial;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+margin:0;
+}
+
+.box{
+
+width:800px;
+
+background:#142235;
+
+padding:40px;
+
+border-radius:20px;
+
+box-shadow:0 0 30px rgba(0,255,255,.2);
+
+animation:fade 1s;
+
+}
+
+h1{
+
+color:#38bdf8;
+
+}
+
+p{
+
+font-size:20px;
+
+line-height:35px;
+
+}
+
+button{
+
+margin-top:30px;
+
+padding:15px 35px;
+
+font-size:20px;
+
+background:#2563eb;
+
+color:white;
+
+border:none;
+
+border-radius:10px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+button:hover{
+
+background:#1d4ed8;
+
+transform:scale(1.05);
+
+}
+
+@keyframes fade{
+
+from{
+
+opacity:0;
+
+transform:translateY(50px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>🕵 Mission Briefing</h1>
+
+<p>
+
+A murder has been reported.
+
+Your objective is to investigate the crime scene,
+interrogate every suspect,
+collect evidence,
+and identify the killer before they escape.
+
+</p>
+
+<p>
+
+⚠ Wrong accusations reduce your remaining attempts.
+
+</p>
+
+<button onclick="location.href='/crime-scene'">
+
+BEGIN INVESTIGATION
+
+</button>
+
+</div>
+
+</body>
+
+</html>
