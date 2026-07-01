@@ -1,18 +1,14 @@
-// Aether Investigations - synthesized ambient background music (no file needed)
-// Creates a slow, moody detective-style pad loop using Web Audio API.
-
 const AetherBGM = (() => {
     let ctx;
     let masterGain;
     let nodes = [];
     let running = false;
 
-    // Notes for a slow, minor, mysterious pad (in Hz) - low register
     const chordNotes = [
-        [110.00, 130.81, 164.81],   // A2, C3, E3
-        [98.00, 123.47, 146.83],    // G2, B2, D3
-        [110.00, 130.81, 164.81],   // A2, C3, E3
-        [87.31, 110.00, 130.81],    // F2, A2, C3
+        [110.00, 130.81, 164.81],
+        [98.00, 123.47, 146.83],
+        [110.00, 130.81, 164.81],
+        [87.31, 110.00, 130.81],
     ];
     let chordIndex = 0;
     let chordTimer = null;
@@ -48,9 +44,8 @@ const AetherBGM = (() => {
             nodes.push(osc, lfo);
         });
 
-        // slow fade in / hold / fade out over 8 seconds
-        chordGain.gain.linearRampToValueAtTime(0.05, now + 2);
-        chordGain.gain.linearRampToValueAtTime(0.05, now + 6);
+        chordGain.gain.linearRampToValueAtTime(0.15, now + 2);
+        chordGain.gain.linearRampToValueAtTime(0.15, now + 6);
         chordGain.gain.linearRampToValueAtTime(0, now + 8);
 
         nodes.push(chordGain);
@@ -64,8 +59,11 @@ const AetherBGM = (() => {
     }
 
     function start() {
-        if (running) return;
         const audioCtx = getCtx();
+        if (audioCtx.state === "suspended") {
+            audioCtx.resume();
+        }
+        if (running) return;
         if (!masterGain) {
             masterGain = audioCtx.createGain();
             masterGain.gain.value = 1;
@@ -93,7 +91,6 @@ const AetherBGM = (() => {
     return { start, stop, setMuted };
 })();
 
-// --- Mute button + persistence across page loads ---
 document.addEventListener("DOMContentLoaded", () => {
     const isMuted = sessionStorage.getItem("aether_bgm_muted") === "true";
 
@@ -114,7 +111,6 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.style.boxShadow = "0 0 10px rgba(0,0,0,0.4)";
     document.body.appendChild(btn);
 
-    // Browsers block audio until a user gesture; start on first click anywhere if not muted.
     let started = false;
     function tryStart() {
         if (started) return;
@@ -127,11 +123,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     btn.addEventListener("click", (e) => {
         e.stopPropagation();
+        if (!started) tryStart();
         const currentlyMuted = sessionStorage.getItem("aether_bgm_muted") === "true";
         const newMuted = !currentlyMuted;
         sessionStorage.setItem("aether_bgm_muted", newMuted);
         AetherBGM.setMuted(newMuted);
         btn.textContent = newMuted ? "🔇 Music Off" : "🔊 Music On";
-        if (!started) tryStart();
     });
 });
