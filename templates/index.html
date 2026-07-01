@@ -2,147 +2,131 @@
 <html>
 <head>
     <title>Aether Investigations</title>
-
     <style>
-        body {
-            margin: 0;
-            font-family: Arial;
-            background: radial-gradient(circle at top, #1e293b, #0f172a);
-            color: white;
-        }
-
-        /* TOP GAME BAR */
-        .topbar {
-            background: #111827;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 18px;
-        }
-
-        .title {
-            font-weight: bold;
-            color: #22c55e;
-        }
-
-        .container {
-            display: flex;
-            padding: 20px;
-            gap: 20px;
-        }
-
-        /* LEFT PANEL (CASE INFO) */
-        .case-panel {
-            width: 30%;
-            background: #1e293b;
-            padding: 15px;
-            border-radius: 12px;
-        }
-
-        /* RIGHT PANEL (SUSPECTS) */
-        .suspects-panel {
-            width: 70%;
-        }
-
-        .suspect-card {
-            background: #334155;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 12px;
-            transition: 0.3s;
-            border-left: 4px solid #22c55e;
-        }
-
-        .suspect-card:hover {
-            transform: scale(1.02);
-            background: #475569;
-        }
-
-        /* BUTTONS */
-        .btn {
-            display: inline-block;
-            margin-top: 8px;
-            padding: 8px 12px;
-            border-radius: 6px;
-            text-decoration: none;
-            color: white;
-            font-size: 14px;
-        }
-
-        .accuse {
-            background: #ef4444;
-        }
-
-        .interrogate {
-            background: #3b82f6;
-        }
-
-        .accuse:hover {
-            background: #dc2626;
-        }
-
-        .interrogate:hover {
-            background: #2563eb;
-        }
-
-        /* RESULT BOX */
-        .result {
-            margin-top: 15px;
-            padding: 15px;
-            background: #0ea5e9;
-            border-radius: 10px;
-        }
-
-        .label {
-            color: #94a3b8;
-        }
+        body { margin: 0; font-family: Arial; background: radial-gradient(circle at top, #1e293b, #0f172a); color: white; }
+        .topbar { background: #111827; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; font-size: 18px; flex-wrap: wrap; gap: 10px; }
+        .title { font-weight: bold; color: #22c55e; }
+        .stats { font-size: 14px; color: #94a3b8; display: flex; gap: 18px; }
+        .stats a { color: #38bdf8; text-decoration: none; }
+        .container { display: flex; padding: 20px; gap: 20px; flex-wrap: wrap; }
+        .case-panel { width: 280px; background: #1e293b; padding: 15px; border-radius: 12px; height: fit-content; }
+        .case-panel .btn { width: 100%; box-sizing: border-box; text-align: center; margin-top: 10px; }
+        .suspects-panel { flex: 1; min-width: 300px; }
+        .suspect-card { background: #334155; padding: 15px; margin-bottom: 15px; border-radius: 12px; transition: 0.2s; border-left: 4px solid #22c55e; }
+        .suspect-card:hover { transform: scale(1.01); background: #3b4a63; }
+        .btn { display: inline-block; margin-top: 8px; margin-right: 6px; padding: 8px 12px; border-radius: 6px; text-decoration: none; color: white; font-size: 14px; border: none; cursor: pointer; }
+        .accuse { background: #ef4444; }
+        .interrogate { background: #3b82f6; }
+        .evidence { background: #f59e0b; }
+        .accuse:hover { background: #dc2626; }
+        .interrogate:hover { background: #2563eb; }
+        .evidence:hover { background: #d97706; }
+        .accuse.disabled { background: #6b7280; pointer-events: none; opacity: 0.6; }
+        .label { color: #94a3b8; }
+        .clue-locked { color: #64748b; font-style: italic; }
+        .clue-revealed { color: #fde047; }
+        .meter-bar { background: #475569; border-radius: 6px; height: 8px; margin-top: 6px; overflow: hidden; }
+        .meter-fill { background: linear-gradient(90deg, #22c55e, #ef4444); height: 100%; width: 0%; }
+        .tag { display: inline-block; font-size: 11px; padding: 2px 6px; border-radius: 4px; background: #0f172a; color: #94a3b8; margin-left: 6px; }
     </style>
 </head>
-
 <body>
 
-<!-- TOP BAR -->
 <div class="topbar">
-    <div class="title">🕵️ AETHER INVESTIGATIONS</div>
-    <div>MISSION: SOLVE THE CASE</div>
+
+    <div class="title">
+        🕵️ AETHER INVESTIGATIONS
+    </div>
+
+    <div class="stats">
+
+        <span>🏆 Score: {{ score }}</span>
+
+        <span>✅ Cases Solved: {{ cases_solved }}</span>
+
+        <span>🎯 Attempts: {{ case.attempts_left }}</span>
+
+        <a href="/notebook">📖 Notebook</a>
+
+        <a href="/history">📁 History</a>
+
+        <a href="/new-case">🕵 New Case</a>
+
+    </div>
+
 </div>
 
 <div class="container">
 
-    <!-- CASE INFO -->
     <div class="case-panel">
-        <h3>CASE FILE</h3>
-        <p><span class="label">Victim:</span> {{ case.victim }}</p>
-        <p><span class="label">Location:</span> {{ case.location }}</p>
-        <p><span class="label">Weapon:</span> {{ case.weapon }}</p>
+        <h2 style="text-align:center;color:#38bdf8;">
+📂 CASE FILE
+</h2>
+        <p>👤 <b>Victim:</b> {{ case.victim }}</p>
+        <p>📍 <b>Location:</b> {{ case.location }}</p>
+        <p>🔪 <b>Weapon:</b> {{ case.weapon }}</p>
+        <div style="margin-top:18px;
+            padding:12px;
+            background:#0f172a;
+            border-left:4px solid #38bdf8;
+            border-radius:8px;">
+
+<b>🕵 Detective Tip</b><br><br>
+
+{{ case.tip }}
+
+</div>
+        <p style="font-size:13px;color:#64748b;">Interrogate suspects, then collect evidence to reveal clues. Accuse only when you're confident — you only get {{ case.attempts_left }} attempt(s) left.</p>
     </div>
 
-    <!-- SUSPECTS -->
     <div class="suspects-panel">
         <h2>Suspects</h2>
 
         {% for s in case.suspects %}
         <div class="suspect-card">
-            <b>{{ loop.index }}. {{ s.name }}</b><br>
+            <div style="display:flex; gap:15px; align-items:center;">
+
+<img src="{{ url_for('static', filename='images/suspects/suspect.png') }}"
+     width="80"
+     height="80"
+     style="border-radius:50%; border:3px solid #22c55e; object-fit:cover;">
+
+<div>
+            <b>{{ loop.index }}. {{ s.name }}</b>
+            {% if s.interrogated %}<span class="tag">Interrogated</span>{% endif %}
+            <br>
             <span class="label">Occupation:</span> {{ s.occupation }}<br>
             <span class="label">Age:</span> {{ s.age }}<br>
-            <span class="label">Clue:</span> {{ s.clue }}<br>
+            {% if s.interrogated %}
+<span class="label">Motive:</span> {{ s.motive }}<br>
+{% else %}
+<span class="label">Motive:</span> 🔒 Unknown<br>
+{% endif %}
+            </div>
+</div>
 
+           {% if s.evidence_collected %}
+            <span class="label">Clue:</span>
+            <span class="clue-revealed">{{ s.clue }}</span><br>
+        {% else %}
+            <span class="label">Clue:</span>
+            <span class="clue-locked">
+        🔒 Unknown — interrogate &amp; collect evidence
+    </span><br>
+{% endif %}
             <a class="btn interrogate" href="/interrogate/{{ loop.index0 }}">Interrogate</a>
-            <a class="btn accuse" href="/accuse/{{ loop.index0 }}">Accuse</a>
+            {% if s.interrogated and not s.evidence_collected %}
+                <a class="btn evidence" href="/evidence/{{ loop.index0 }}">Collect Evidence</a>
+            {% endif %}
+            <a class="btn accuse {% if case.closed %}disabled{% endif %}" href="/accuse/{{ loop.index0 }}">Accuse</a>
         </div>
         {% endfor %}
-
-        {% if result %}
-        <div class="result">
-            {{ result }}
-        </div>
-        {% endif %}
 
     </div>
 
 </div>
+
+
 
 </body>
 </html>
