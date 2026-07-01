@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Detective Notebook</title>
+
+<style>
+
+body{
+
+background:#0f172a;
+
+font-family:Arial;
+
+color:white;
+
+padding:40px;
+
+}
+
+.box{
+
+max-width:900px;
+
+margin:auto;
+
+background:#1e293b;
+
+padding:30px;
+
+border-radius:15px;
+
+}
+
+h1{
+
+color:#38bdf8;
+
+}
+
+.section{
+
+margin-top:25px;
+
+}
+
+li{
+
+margin:8px 0;
+
+}
+
+.btn{
+
+display:inline-block;
+
+margin-top:30px;
+
+padding:12px 20px;
+
+background:#2563eb;
+
+color:white;
+
+text-decoration:none;
+
+border-radius:8px;
+
+}
+
+.btn:hover{
+
+background:#1d4ed8;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>📖 Detective Notebook</h1>
+
+<div class="section">
+
+<h2>👤 Interrogated Suspects</h2>
+
+{% if interrogated %}
+
+<ul>
+
+{% for person in interrogated %}
+
+<li>{{ person }}</li>
+
+{% endfor %}
+
+</ul>
+
+{% else %}
+
+<p>No suspects interrogated yet.</p>
+
+{% endif %}
+
+</div>
+
+<div class="section">
+
+<h2>🔍 Evidence Collected</h2>
+
+{% if evidence %}
+
+<ul>
+
+{% for item in evidence %}
+
+<li>
+
+<b>{{ item.name }}</b>
+
+→ {{ item.clue }}
+
+</li>
+
+{% endfor %}
+
+</ul>
+
+{% else %}
+
+<p>No evidence collected yet.</p>
+
+{% endif %}
+
+</div>
+
+<div class="section">
+
+<h2>📂 Current Case</h2>
+
+<p>Victim : {{ case.victim }}</p>
+
+<p>Location : {{ case.location }}</p>
+
+<p>Weapon : {{ case.weapon }}</p>
+
+<p>Attempts Left : {{ case.attempts_left }}</p>
+
+</div>
+
+<a href="/start" class="btn">
+
+⬅ Back to Investigation
+
+</a>
+
+</div>
+
+</body>
+
+</html>
