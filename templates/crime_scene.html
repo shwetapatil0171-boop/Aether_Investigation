@@ -7,131 +7,78 @@
 <style>
 
 body{
-
 margin:0;
-
 background:#08131f;
-
 font-family:Arial;
-
 color:white;
-
 }
 
 .header{
-
 background:#111827;
-
 padding:20px;
-
 text-align:center;
-
 font-size:35px;
-
 color:#38bdf8;
-
 }
 
 .container{
-
 width:90%;
-
 margin:auto;
-
 padding:30px;
-
 }
 
 .scene{
-
 background:#1e293b;
-
 padding:25px;
-
 border-radius:15px;
-
 box-shadow:0px 0px 20px rgba(0,255,255,.15);
-
 }
 
 .scene img{
-
 width:100%;
-
 border-radius:15px;
-
 }
 
 .evidence{
-
 margin-top:30px;
-
 display:grid;
-
 grid-template-columns:repeat(2,1fr);
-
 gap:20px;
-
 }
 
 .card{
-
 background:#334155;
-
 padding:20px;
-
 border-radius:10px;
-
 transition:.3s;
-
 cursor:pointer;
-
 text-align:center;
-
 }
 
 .card:hover{
-
 transform:scale(1.05);
-
 background:#475569;
-
 }
 
 .card img{
-
 width:50px;
-
 height:50px;
-
 margin-bottom:10px;
-
 }
 
 .btn{
-
 display:inline-block;
-
 margin-top:35px;
-
 padding:15px 35px;
-
 background:#2563eb;
-
 color:white;
-
 text-decoration:none;
-
 border-radius:10px;
-
 font-size:18px;
-
 }
 
 .btn:hover{
-
 background:#1d4ed8;
-
 }
 
 </style>
@@ -141,9 +88,7 @@ background:#1d4ed8;
 <body>
 
 <div class="header">
-
 🕵 Crime Scene Investigation
-
 </div>
 
 <div class="container">
@@ -151,13 +96,11 @@ background:#1d4ed8;
 <div class="scene">
 
 <h2>{{ case.location }}</h2>
-
 <p><b>Victim:</b> {{ case.victim }}</p>
-
 <p><b>Weapon:</b> {{ case.weapon }}</p>
 
 {% if case.scene_image %}
-<img src="{{ url_for('static', filename='images/' + case.scene_image) }}"
+<img src="{{ url_for('static', filename='images/crime_scenes/' + case.scene_image) }}"
      alt="Crime Scene"
      style="width:100%;
             height:450px;
@@ -176,31 +119,29 @@ background:#1d4ed8;
 <div class="evidence">
 
 <div class="card">
-    <img src="{{ url_for('static', filename='images/icons/blood.png') }}" alt="Blood Sample">
+    <img src="{{ url_for('static', filename='images/evidence/blood.png') }}" alt="Blood Sample">
     <div>Blood Sample</div>
 </div>
 
 <div class="card">
-    <img src="{{ url_for('static', filename='images/icons/footprints.png') }}" alt="Footprints">
+    <img src="{{ url_for('static', filename='images/evidence/footprints.png') }}" alt="Footprints">
     <div>Footprints</div>
 </div>
 
 <div class="card">
-    <img src="{{ url_for('static', filename='images/icons/phone.png') }}" alt="Mobile Phone">
+    <img src="{{ url_for('static', filename='images/evidence/phone.png') }}" alt="Mobile Phone">
     <div>Mobile Phone</div>
 </div>
 
 <div class="card">
-    <img src="{{ url_for('static', filename='images/icons/knife.png') }}" alt="Murder Weapon">
+    <img src="{{ url_for('static', filename='images/evidence/knife.png') }}" alt="Murder Weapon">
     <div>Murder Weapon</div>
 </div>
 
 </div>
 
 <a class="btn" href="/start">
-
 Continue Investigation →
-
 </a>
 
 </div>
