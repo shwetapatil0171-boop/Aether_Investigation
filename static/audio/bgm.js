@@ -60,9 +60,7 @@ const AetherBGM = (() => {
 
     function start() {
         const audioCtx = getCtx();
-        if (audioCtx.state === "suspended") {
-            audioCtx.resume();
-        }
+        if (audioCtx.state === "suspended") audioCtx.resume();
         if (running) return;
         if (!masterGain) {
             masterGain = audioCtx.createGain();
@@ -73,30 +71,20 @@ const AetherBGM = (() => {
         loop();
     }
 
-    function stop() {
-        running = false;
-        if (chordTimer) clearTimeout(chordTimer);
-        nodes.forEach(n => {
-            try { n.stop && n.stop(); } catch (e) {}
-            try { n.disconnect(); } catch (e) {}
-        });
-        nodes = [];
-    }
-
     function setMuted(muted) {
         if (!masterGain) return;
         masterGain.gain.value = muted ? 0 : 1;
     }
 
-    return { start, stop, setMuted };
+    return { start, setMuted };
 })();
 
 document.addEventListener("DOMContentLoaded", () => {
-    const isMuted = sessionStorage.getItem("aether_bgm_muted") === "true";
+    let musicOn = false;
 
     const btn = document.createElement("button");
     btn.id = "bgm-toggle";
-    btn.textContent = isMuted ? "🔇 Music Off" : "🔊 Music On";
+    btn.textContent = "🔇 Music Off";
     btn.style.position = "fixed";
     btn.style.bottom = "16px";
     btn.style.right = "16px";
@@ -111,23 +99,16 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.style.boxShadow = "0 0 10px rgba(0,0,0,0.4)";
     document.body.appendChild(btn);
 
-    let started = false;
-    function tryStart() {
-        if (started) return;
-        started = true;
-        AetherBGM.start();
-        AetherBGM.setMuted(isMuted);
-        document.removeEventListener("click", tryStart);
-    }
-    document.addEventListener("click", tryStart);
-
     btn.addEventListener("click", (e) => {
         e.stopPropagation();
-        if (!started) tryStart();
-        const currentlyMuted = sessionStorage.getItem("aether_bgm_muted") === "true";
-        const newMuted = !currentlyMuted;
-        sessionStorage.setItem("aether_bgm_muted", newMuted);
-        AetherBGM.setMuted(newMuted);
-        btn.textContent = newMuted ? "🔇 Music Off" : "🔊 Music On";
+        musicOn = !musicOn;
+        if (musicOn) {
+            AetherBGM.start();
+            AetherBGM.setMuted(false);
+            btn.textContent = "🔊 Music On";
+        } else {
+            AetherBGM.setMuted(true);
+            btn.textContent = "🔇 Music Off";
+        }
     });
 });
